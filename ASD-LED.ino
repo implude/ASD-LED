@@ -13,6 +13,7 @@ int B = 18;
 
 char data[6];  // char arr for recieved data
 
+
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800); // create strip object
 
 void setup() {
@@ -30,13 +31,13 @@ void loop() {
     
     if(Serial.available()){              // check serial data is available
       for(int i=0; i<6; i++){            // recieve 6 dight hexdemical code
-        if(Serial.available()){
-          cmd = Serial.read();
-        }
+        cmd = Serial.read();
         data[i] = cmd;
+        delay(10);
       }
       sscanf(data, "%02x%02x%02x", &R, &G, &B);  // convert hex code to RGB code
       colorWipe(strip.Color(R, G, B));           // change color
+      Serial.println(B);
       delay(100);   
     }
 }
